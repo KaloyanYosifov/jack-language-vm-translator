@@ -7,6 +7,7 @@ use JackVMTranslator\Exceptions\FileNotFoundException;
 
 class Parser
 {
+    private const MAX_LINE_LENGTH = 4096;
     protected $file = null;
 
     /**
@@ -28,6 +29,20 @@ class Parser
         $this->file = fopen($filename, 'r');
 
         return $this;
+    }
+
+    /**
+     * @return \Generator
+     */
+    public function parseLine()
+    {
+        if (!$this->file) {
+            throw new \LogicException('You haven\'t opened a VM file!');
+        }
+
+        while (($line = fgets($this->file, static::MAX_LINE_LENGTH)) !== false) {
+            yield $line;
+        }
     }
 
     public function close(): void

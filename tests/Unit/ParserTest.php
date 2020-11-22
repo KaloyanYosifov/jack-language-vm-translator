@@ -17,3 +17,9 @@ it(
     fn() => (new Parser())->open('test.txt')
 )
     ->throws(FileExtensionIsNotVM::class);
+
+it(
+    'throws an error if no file has been opened yet',
+    fn() => (new Parser())->parseLine()->next()
+)
+    ->throws(\LogicException::class, 'You haven\'t opened a VM file!');
