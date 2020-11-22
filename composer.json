@@ -1,0 +1,16 @@
+{
+    "name": "kyosifov/jack-language-vm-translator",
+    "authors": [
+        {
+            "name": "Kaloyan Yosifov",
+            "email": "kaloqn665@gmail.com"
+        }
+    ],
+    "require": {},
+    "prefer-stable": true,
+    "minimum-stability": "dev",
+    "require-dev": {
+        "phpunit/phpunit": "^9.3.10",
+        "pestphp/pest": "^0.3.12"
+    }
+}
