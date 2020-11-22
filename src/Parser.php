@@ -41,7 +41,9 @@ class Parser
         }
 
         while (($line = fgets($this->file, static::MAX_LINE_LENGTH)) !== false) {
-            yield $line;
+            $line = $this->formatCodeLine($line);
+
+            yield $this->formatCodeLine($line);
         }
     }
 
@@ -52,5 +54,15 @@ class Parser
         }
 
         fclose($this->file);
+    }
+
+    protected function formatCodeLine(string $line): string
+    {
+        // remove comments from line
+        if (($foundCommentPos = strpos($line, '//')) !== false) {
+            $line = substr_replace($line, '', $foundCommentPos);
+        }
+
+        return trim($line);
     }
 }

@@ -23,3 +23,13 @@ it(
     fn() => (new Parser())->parseLine()->next()
 )
     ->throws(\LogicException::class, 'You haven\'t opened a VM file!');
+
+it('parses the first line in the vm file', function () {
+    $parser = new Parser();
+    $parser->open(getTestFilePath('SimpleAdd.vm'));
+
+    $line = $parser->parseLine()->current();
+    expect($line)->toEqual('push constant 7');
+
+    $parser->close();
+});
