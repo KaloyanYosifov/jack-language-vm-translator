@@ -2,9 +2,10 @@
 
 namespace JackVMTranslator\Services;
 
+use JackVMTranslator\Replacers\StubReplacer;
 use JackVMTranslator\Retrievers\StubRetriever;
 
-class StubReplacerService
+class StubReplacerService implements StubReplacer
 {
     protected StubRetriever $stubRetriever;
     protected array $stubNamesToReplace = [];

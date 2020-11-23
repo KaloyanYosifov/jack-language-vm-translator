@@ -3,6 +3,7 @@
 namespace JackVMTranslator\VMCommands;
 
 use JackVMTranslator\Enums\MemorySegment;
+use JackVMTranslator\Replacers\StubReplacer;
 use JackVMTranslator\Enums\MemoryAccessAction;
 
 class MemoryAccessCommand implements VMCommand
@@ -49,8 +50,12 @@ class MemoryAccessCommand implements VMCommand
         );
     }
 
-    public function getAssemblerCode(): string
+    public function getAssemblerCode(StubReplacer $stubReplacer): string
     {
-        return '';
+        return $stubReplacer
+            ->replace('SEGMENT_LOCATION', )
+            ->handle(
+            sprintf('%sStack.stub', ucfirst($this->memoryAccessAction->getValue()))
+        );
     }
 }
