@@ -78,7 +78,7 @@ class Parser
         return trim($line);
     }
 
-    protected function parseLineCommand(string $line)
+    protected function parseLineToCommand(string $line)
     {
         $parts = explode(' ', $line);
 
