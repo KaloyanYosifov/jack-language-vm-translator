@@ -2,6 +2,7 @@
 
 use JackVMTranslator\Parser;
 use JackVMTranslator\Enums\MemorySegment;
+use JackVMTranslator\Enums\AlgorithmicAction;
 use JackVMTranslator\Enums\MemoryAccessAction;
 use JackVMTranslator\VMCommands\MemoryAccessCommand;
 use JackVMTranslator\Exceptions\FileExtensionIsNotVMException;
@@ -45,7 +46,7 @@ it('parses the lines in the vm code', function () {
             expect($command->getSegment()->getValue())->toEqual(MemorySegment::CONSTANT_SEGMENT()->getValue());
             expect($command->getLocation())->toEqual(8);
         } elseif ($i === 2) {
-            continue;
+            expect($command->getAction()->getValue())->toEqual(AlgorithmicAction::ADD_ACTION()->getValue());
         }
 
         $parseLineFunction->next();

@@ -3,11 +3,14 @@
 namespace JackVMTranslator;
 
 use JackVMTranslator\Enums\MemorySegment;
+use JackVMTranslator\Enums\AlgorithmicAction;
 use JackVMTranslator\Enums\MemoryAccessAction;
+use JackVMTranslator\VMCommands\AlgorithmicCommand;
 use JackVMTranslator\VMCommands\MemoryAccessCommand;
 use JackVMTranslator\Exceptions\FileExtensionIsNotVMException;
 use JackVMTranslator\Exceptions\FileNotFoundException;
 use JackVMTranslator\Exceptions\InvalidMemorySegmentException;
+use JackVMTranslator\Exceptions\InvalidAlgorithmicActionException;
 use JackVMTranslator\Exceptions\InvalidMemoryAccessActionException;
 
 class Parser
@@ -67,7 +70,11 @@ class Parser
                     $location
                 );
             } else {
-                $command = 'test';
+                if (!$algorithmicAction = AlgorithmicAction::search($parts[0])) {
+                    throw new InvalidAlgorithmicActionException($parts[0]);
+                }
+
+                $command = new AlgorithmicCommand(AlgorithmicAction::{$algorithmicAction}());
             }
 
             yield $command;
