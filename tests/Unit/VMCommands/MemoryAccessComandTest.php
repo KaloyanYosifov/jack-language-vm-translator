@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\VMCommands;
+namespace Tests\Unit\VMCommands;
 
 use JackVMTranslator\Enums\MemorySegment;
 use JackVMTranslator\Enums\MemoryAccessAction;

@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Unit;
+
 use JackVMTranslator\Parser;
 use JackVMTranslator\Enums\MemorySegment;
 use JackVMTranslator\Enums\AlgorithmicAction;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\VMCommands;
+namespace Tests\Unit\VMCommands;
 
 use JackVMTranslator\Enums\AlgorithmicAction;
 use JackVMTranslator\VMCommands\AlgorithmicCommand;
