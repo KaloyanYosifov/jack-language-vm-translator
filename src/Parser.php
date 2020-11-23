@@ -51,6 +51,10 @@ class Parser
         while (($line = fgets($this->file, static::MAX_LINE_LENGTH)) !== false) {
             $line = $this->formatCodeLine($line);
 
+            if (!$line) {
+                continue;
+            }
+
             $parts = explode(' ', $line);
 
             if (count($parts) === 3) {

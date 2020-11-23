@@ -4,9 +4,8 @@ use JackVMTranslator\Parser;
 use JackVMTranslator\Enums\MemorySegment;
 use JackVMTranslator\Enums\AlgorithmicAction;
 use JackVMTranslator\Enums\MemoryAccessAction;
-use JackVMTranslator\VMCommands\MemoryAccessCommand;
-use JackVMTranslator\Exceptions\FileExtensionIsNotVMException;
 use JackVMTranslator\Exceptions\FileNotFoundException;
+use JackVMTranslator\Exceptions\FileExtensionIsNotVMException;
 
 use function Tests\getTestFilePath;
 
@@ -51,6 +50,27 @@ it('parses the lines in the vm code', function () {
 
         $parseLineFunction->next();
     }
+
+    $parser->close();
+});
+
+it('skips commented lines and removes comment from code', function () {
+    $parser = new Parser();
+    $parser->open(getTestFilePath('SimpleAddWithComments.vm'));
+    $parseLine = $parser->parseLine();
+    $command = $parseLine->current();
+
+    expect($command->getAccessAction()->getValue())->toEqual(MemoryAccessAction::PUSH_ACTION()->getValue());
+    expect($command->getSegment()->getValue())->toEqual(MemorySegment::CONSTANT_SEGMENT()->getValue());
+    expect($command->getLocation())->toEqual(7);
+
+    $parseLine->next();
+
+    $command = $parseLine->current();
+
+    expect($command->getAccessAction()->getValue())->toEqual(MemoryAccessAction::PUSH_ACTION()->getValue());
+    expect($command->getSegment()->getValue())->toEqual(MemorySegment::CONSTANT_SEGMENT()->getValue());
+    expect($command->getLocation())->toEqual(8);
 
     $parser->close();
 });
