@@ -55,33 +55,7 @@ class Parser
                 continue;
             }
 
-            $parts = explode(' ', $line);
-
-            if (count($parts) === 3) {
-                $location = $parts[2];
-
-                if (!$memoryAccessAction = MemoryAccessAction::search($parts[0])) {
-                    throw new InvalidMemoryAccessActionException($parts[0]);
-                }
-
-                if (!$memorySegment = MemorySegment::search($parts[1])) {
-                    throw new InvalidMemorySegmentException($parts[1]);
-                }
-
-                $command = new MemoryAccessCommand(
-                    MemoryAccessAction::{$memoryAccessAction}(),
-                    MemorySegment::{$memorySegment}(),
-                    $location
-                );
-            } else {
-                if (!$algorithmicAction = AlgorithmicAction::search($parts[0])) {
-                    throw new InvalidAlgorithmicActionException($parts[0]);
-                }
-
-                $command = new AlgorithmicCommand(AlgorithmicAction::{$algorithmicAction}());
-            }
-
-            yield $command;
+            yield $this->parseLineCommand($line);
         }
     }
 
@@ -102,5 +76,34 @@ class Parser
         }
 
         return trim($line);
+    }
+
+    protected function parseLineCommand(string $line)
+    {
+        $parts = explode(' ', $line);
+
+        if (count($parts) === 3) {
+            $location = $parts[2];
+
+            if (!$memoryAccessAction = MemoryAccessAction::search($parts[0])) {
+                throw new InvalidMemoryAccessActionException($parts[0]);
+            }
+
+            if (!$memorySegment = MemorySegment::search($parts[1])) {
+                throw new InvalidMemorySegmentException($parts[1]);
+            }
+
+            return new MemoryAccessCommand(
+                MemoryAccessAction::{$memoryAccessAction}(),
+                MemorySegment::{$memorySegment}(),
+                $location
+            );
+        }
+
+        if (!$algorithmicAction = AlgorithmicAction::search($parts[0])) {
+            throw new InvalidAlgorithmicActionException($parts[0]);
+        }
+
+        return new AlgorithmicCommand(AlgorithmicAction::{$algorithmicAction}());
     }
 }
