@@ -1,0 +1,9 @@
+// push to stack
+@{SEGMENT_LOCATION}
+A=M+{SEGMENT_OFFSET}
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
