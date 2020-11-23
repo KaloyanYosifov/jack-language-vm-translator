@@ -55,7 +55,7 @@ class Parser
                 continue;
             }
 
-            yield $this->parseLineCommand($line);
+            yield $this->parseLineToCommand($line);
         }
     }
 
