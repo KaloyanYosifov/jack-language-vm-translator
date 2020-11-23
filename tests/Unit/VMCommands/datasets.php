@@ -54,7 +54,7 @@ $pushActions = [
             MemorySegment::STATIC_SEGMENT(),
             55,
             <<<EOF
-                @.55
+                @SomeFile.55
                 D=M
                 EOF,
         ],
@@ -128,7 +128,7 @@ $popActions = [
             MemorySegment::STATIC_SEGMENT(),
             55,
             <<<EOF
-                @.55
+                @SomeFile.55
                 M=D
                 EOF,
         ],

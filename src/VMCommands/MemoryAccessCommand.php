@@ -12,18 +12,25 @@ class MemoryAccessCommand implements VMCommand
     protected MemoryAccessAction $memoryAccessAction;
     protected MemorySegment $memorySegment;
     protected int $location;
+    protected string $currentFileName = '';
 
     /**
      * MemoryAccessCommand constructor.
      * @param MemoryAccessAction $memoryAccessAction
      * @param MemorySegment $memorySegment
      * @param int $location
+     * @param string $currentFileName
      */
-    public function __construct(MemoryAccessAction $memoryAccessAction, MemorySegment $memorySegment, int $location)
-    {
+    public function __construct(
+        MemoryAccessAction $memoryAccessAction,
+        MemorySegment $memorySegment,
+        int $location,
+        string $currentFileName
+    ) {
         $this->memoryAccessAction = $memoryAccessAction;
         $this->memorySegment = $memorySegment;
         $this->location = $location;
+        $this->currentFileName = $currentFileName;
 
         if (
             MemoryAccessAction::POP_ACTION()->getKey() === $this->memoryAccessAction->getKey() &&
@@ -66,10 +73,11 @@ class MemoryAccessCommand implements VMCommand
             MemorySegment::THIS_SEGMENT()->getKey(),
             MemorySegment::THAT_SEGMENT()->getKey(),
         ];
+        $stubReplacer
+            ->replace('SEGMENT_LOCATION', $convertor->convert($this->memorySegment, $this->currentFileName, $this->location));
 
         if (in_array($this->memorySegment->getKey(), $memorySegmentsWithOffsets)) {
             return $stubReplacer
-                ->replace('SEGMENT_LOCATION', $convertor->convert($this->memorySegment, '', $this->location))
                 ->replace('SEGMENT_OFFSET', $this->location)
                 ->handle(
                     sprintf('%sStack.stub', ucfirst($this->memoryAccessAction->getValue()))
@@ -77,7 +85,6 @@ class MemoryAccessCommand implements VMCommand
         }
 
         return $stubReplacer
-            ->replace('SEGMENT_LOCATION', $convertor->convert($this->memorySegment, '', $this->location))
             ->replace(
                 'SEGMENT_RECEIVER',
                 MemorySegment::CONSTANT_SEGMENT()->getValue() === $this->memorySegment->getValue() ? 'A' : 'M'

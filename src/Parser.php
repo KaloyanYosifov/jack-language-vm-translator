@@ -97,7 +97,8 @@ class Parser
             return new MemoryAccessCommand(
                 MemoryAccessAction::{$memoryAccessAction}(),
                 MemorySegment::{$memorySegment}(),
-                $location
+                $location,
+                basename(stream_get_meta_data($this->file)['uri'])
             );
         }
 
