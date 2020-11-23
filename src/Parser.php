@@ -3,6 +3,7 @@
 namespace JackVMTranslator;
 
 use JackVMTranslator\Enums\MemorySegment;
+use JackVMTranslator\VMCommands\VMCommand;
 use JackVMTranslator\Enums\AlgorithmicAction;
 use JackVMTranslator\Enums\MemoryAccessAction;
 use JackVMTranslator\VMCommands\AlgorithmicCommand;
@@ -78,7 +79,7 @@ class Parser
         return trim($line);
     }
 
-    protected function parseLineToCommand(string $line)
+    protected function parseLineToCommand(string $line): VMCommand
     {
         $parts = explode(' ', $line);
 
