@@ -5,7 +5,7 @@ namespace JackVMTranslator\VMCommands;
 use JackVMTranslator\Enums\MemorySegment;
 use JackVMTranslator\Enums\MemoryAccessAction;
 
-class MemoryAccessCommand
+class MemoryAccessCommand implements VMCommand
 {
     protected MemoryAccessAction $memoryAccessAction;
     protected MemorySegment $memorySegment;
@@ -37,5 +37,20 @@ class MemoryAccessCommand
     public function getLocation(): int
     {
         return $this->location;
+    }
+
+    public function getVMCode(): string
+    {
+        return sprintf(
+            '%s %s %s',
+            $this->memoryAccessAction->getValue(),
+            $this->memorySegment->getValue(),
+            $this->location
+        );
+    }
+
+    public function getAssemblerCode(): string
+    {
+        return '';
     }
 }

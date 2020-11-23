@@ -4,7 +4,7 @@ namespace JackVMTranslator\VMCommands;
 
 use JackVMTranslator\Enums\AlgorithmicAction;
 
-class AlgorithmicCommand
+class AlgorithmicCommand implements VMCommand
 {
     protected AlgorithmicAction $action;
 
@@ -16,5 +16,18 @@ class AlgorithmicCommand
     public function getAction(): AlgorithmicAction
     {
         return $this->action;
+    }
+
+    public function getVMCode(): string
+    {
+        return sprintf(
+            '%s',
+            $this->action->getValue()
+        );
+    }
+
+    public function getAssemblerCode(): string
+    {
+        return '';
     }
 }
