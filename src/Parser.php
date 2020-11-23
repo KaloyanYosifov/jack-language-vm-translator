@@ -64,7 +64,7 @@ class Parser
                 $command = new MemoryAccessCommand(
                     MemoryAccessAction::{$memoryAccessAction}(),
                     MemorySegment::{$memorySegment}(),
-                    $parts[2]
+                    $location
                 );
             } else {
                 $command = 'test';
