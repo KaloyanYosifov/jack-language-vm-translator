@@ -4,7 +4,7 @@ namespace JackVMTranslator\Converter;
 
 use JackVMTranslator\Enums\MemorySegment;
 
-class SegmentToAssemblerNameConvertor
+class SegmentToAssemblerNameConvertor implements Convertor
 {
     protected array $convertedNames = [];
 
@@ -18,7 +18,7 @@ class SegmentToAssemblerNameConvertor
         ];
     }
 
-    public function convert(MemorySegment $memorySegment, string $currentFileName, int $location)
+    public function convert(MemorySegment $memorySegment, string $currentFileName, int $location): string
     {
         if (array_key_exists($memorySegment->getKey(), $this->convertedNames)) {
             return $this->convertedNames[$memorySegment->getKey()];

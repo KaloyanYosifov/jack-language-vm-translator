@@ -2,6 +2,8 @@
 
 namespace JackVMTranslator\VMCommands;
 
+use JackVMTranslator\Converter\Convertor;
+use JackVMTranslator\Replacers\StubReplacer;
 use JackVMTranslator\Enums\AlgorithmicAction;
 
 class AlgorithmicCommand implements VMCommand
@@ -26,7 +28,7 @@ class AlgorithmicCommand implements VMCommand
         );
     }
 
-    public function getAssemblerCode(): string
+    public function getAssemblerCode(StubReplacer $stubReplacer, Convertor $convertor): string
     {
         return '';
     }

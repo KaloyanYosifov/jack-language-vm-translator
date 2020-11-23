@@ -1,7 +1,6 @@
 // push to stack
 @{SEGMENT_LOCATION}
-A=M+{SEGMENT_OFFSET}
-D=M
+D={SEGMENT_RECEIVER}
 @SP
 A=M
 M=D
