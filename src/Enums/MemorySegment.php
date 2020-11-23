@@ -2,6 +2,8 @@
 
 namespace JackVMTranslator\Enums;
 
+use MyCLabs\Enum\Enum;
+
 /**
  * @method static MemorySegment LOCAL_SEGMENT()
  * @method static MemorySegment ARGUMENT_SEGMENT()
@@ -12,7 +14,7 @@ namespace JackVMTranslator\Enums;
  * @method static MemorySegment POINTER_SEGMENT()
  * @method static MemorySegment TEMP_SEGMENT()
  */
-class MemorySegment
+class MemorySegment extends Enum
 {
     private const LOCAL_SEGMENT = 'local';
     private const ARGUMENT_SEGMENT = 'argument';

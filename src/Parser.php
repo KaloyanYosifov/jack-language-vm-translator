@@ -2,8 +2,13 @@
 
 namespace JackVMTranslator;
 
-use JackVMTranslator\Exceptions\FileExtensionIsNotVM;
+use JackVMTranslator\Enums\MemorySegment;
+use JackVMTranslator\Enums\MemoryAccessAction;
+use JackVMTranslator\VMCommands\MemoryAccessCommand;
+use JackVMTranslator\Exceptions\FileExtensionIsNotVMException;
 use JackVMTranslator\Exceptions\FileNotFoundException;
+use JackVMTranslator\Exceptions\InvalidMemorySegmentException;
+use JackVMTranslator\Exceptions\InvalidMemoryAccessActionException;
 
 class Parser
 {
@@ -13,13 +18,13 @@ class Parser
     /**
      * @param string $filename
      * @return $this
-     * @throws FileExtensionIsNotVM
+     * @throws FileExtensionIsNotVMException
      * @throws FileNotFoundException
      */
     public function open(string $filename): self
     {
         if (!preg_match('~\.vm$~', $filename)) {
-            throw new FileExtensionIsNotVM($filename);
+            throw new FileExtensionIsNotVMException($filename);
         }
 
         if (!file_exists($filename)) {
@@ -43,7 +48,29 @@ class Parser
         while (($line = fgets($this->file, static::MAX_LINE_LENGTH)) !== false) {
             $line = $this->formatCodeLine($line);
 
-            yield $this->formatCodeLine($line);
+            $parts = explode(' ', $line);
+
+            if (count($parts) === 3) {
+                $location = $parts[2];
+
+                if (!$memoryAccessAction = MemoryAccessAction::search($parts[0])) {
+                    throw new InvalidMemoryAccessActionException($parts[0]);
+                }
+
+                if (!$memorySegment = MemorySegment::search($parts[1])) {
+                    throw new InvalidMemorySegmentException($parts[1]);
+                }
+
+                $command = new MemoryAccessCommand(
+                    MemoryAccessAction::{$memoryAccessAction}(),
+                    MemorySegment::{$memorySegment}(),
+                    $parts[2]
+                );
+            } else {
+                $command = 'test';
+            }
+
+            yield $command;
         }
     }
 

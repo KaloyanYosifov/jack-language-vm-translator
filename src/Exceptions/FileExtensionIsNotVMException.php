@@ -2,7 +2,7 @@
 
 namespace JackVMTranslator\Exceptions;
 
-class FileExtensionIsNotVM extends \Exception
+class FileExtensionIsNotVMException extends \Exception
 {
     public function __construct(string $filename)
     {
