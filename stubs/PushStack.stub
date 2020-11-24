@@ -1,6 +1,6 @@
 // push to stack
 @{SEGMENT_LOCATION}
-A=M+{SEGMENT_OFFSET}
+A={SEGMENT_ACCESS}
 D=M
 @SP
 A=M
