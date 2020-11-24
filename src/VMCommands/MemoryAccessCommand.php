@@ -3,9 +3,9 @@
 namespace JackVMTranslator\VMCommands;
 
 use JackVMTranslator\Enums\MemorySegment;
-use JackVMTranslator\Converter\Convertor;
 use JackVMTranslator\Replacers\StubReplacer;
 use JackVMTranslator\Enums\MemoryAccessAction;
+use JackVMTranslator\Converter\SegmentToAssemblerNameConvertor;
 
 class MemoryAccessCommand implements VMCommand
 {
@@ -65,8 +65,9 @@ class MemoryAccessCommand implements VMCommand
         );
     }
 
-    public function getAssemblerCode(StubReplacer $stubReplacer, Convertor $convertor): string
+    public function getAssemblerCode(StubReplacer $stubReplacer): string
     {
+        $convertor = new SegmentToAssemblerNameConvertor();
         $memorySegmentsWithOffsets = [
             MemorySegment::LOCAL_SEGMENT()->getKey(),
             MemorySegment::ARGUMENT_SEGMENT()->getKey(),

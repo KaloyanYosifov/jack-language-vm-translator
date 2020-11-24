@@ -9,5 +9,5 @@ interface VMCommand
 {
     public function getVMCode(): string;
 
-    public function getAssemblerCode(StubReplacer $stubReplacer, Convertor $convertor): string;
+    public function getAssemblerCode(StubReplacer $stubReplacer): string;
 }

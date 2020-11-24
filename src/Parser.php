@@ -6,7 +6,7 @@ use JackVMTranslator\Enums\MemorySegment;
 use JackVMTranslator\VMCommands\VMCommand;
 use JackVMTranslator\Enums\AlgorithmicAction;
 use JackVMTranslator\Enums\MemoryAccessAction;
-use JackVMTranslator\VMCommands\AlgorithmicCommand;
+use JackVMTranslator\VMCommands\ArithmeticCommand;
 use JackVMTranslator\VMCommands\MemoryAccessCommand;
 use JackVMTranslator\Exceptions\FileExtensionIsNotVMException;
 use JackVMTranslator\Exceptions\FileNotFoundException;
@@ -106,6 +106,6 @@ class Parser
             throw new InvalidAlgorithmicActionException($parts[0]);
         }
 
-        return new AlgorithmicCommand(AlgorithmicAction::{$algorithmicAction}());
+        return new ArithmeticCommand(AlgorithmicAction::{$algorithmicAction}());
     }
 }

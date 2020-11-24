@@ -6,6 +6,14 @@ use MyCLabs\Enum\Enum;
 
 /**
  * @method static AlgorithmicAction ADD_ACTION()
+ * @method static AlgorithmicAction SUB_ACTION()
+ * @method static AlgorithmicAction NEG_ACTION()
+ * @method static AlgorithmicAction EQ_ACTION()
+ * @method static AlgorithmicAction GT_ACTION()
+ * @method static AlgorithmicAction LT_ACTION()
+ * @method static AlgorithmicAction AND_ACTION()
+ * @method static AlgorithmicAction OR_ACTION()
+ * @method static AlgorithmicAction NOT_ACTION()
  */
 class AlgorithmicAction extends Enum
 {

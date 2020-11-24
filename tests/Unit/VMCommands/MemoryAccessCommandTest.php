@@ -9,7 +9,7 @@ use JackVMTranslator\Services\StubReplacerService;
 use JackVMTranslator\VMCommands\MemoryAccessCommand;
 use JackVMTranslator\Converter\SegmentToAssemblerNameConvertor;
 
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'datasets.php';
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'memory-access-datasets.php';
 
 it('can reveal its vm code', function () {
     $command = new MemoryAccessCommand(MemoryAccessAction::POP_ACTION(), MemorySegment::TEMP_SEGMENT(), 4, '');
@@ -22,7 +22,6 @@ it('can reveal its assembler code', function ($action, $dataSets) {
         expect(
             $command->getAssemblerCode(
                 new StubReplacerService(new TestStubFileRetriever()),
-                new SegmentToAssemblerNameConvertor()
             )
         )
             ->toEqual($equal);
