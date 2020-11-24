@@ -10,8 +10,10 @@ $pushActions = [
             MemorySegment::LOCAL_SEGMENT(),
             10,
             <<<EOF
+                @10
+                D=A
                 @LCL
-                A=M+10
+                A=D+M
                 D=M
                 EOF,
         ],
@@ -19,26 +21,28 @@ $pushActions = [
             MemorySegment::ARGUMENT_SEGMENT(),
             5,
             <<<EOF
+                @5
+                D=A
                 @ARG
-                A=M+5
+                A=D+M
                 D=M
                 EOF,
         ],
         [
             MemorySegment::THIS_SEGMENT(),
-            7,
+            1,
             <<<EOF
                 @THIS
-                A=M+7
+                A=M+1
                 D=M
                 EOF,
         ],
         [
             MemorySegment::THAT_SEGMENT(),
-            9,
+            0,
             <<<EOF
                 @THAT
-                A=M+9
+                A=M
                 D=M
                 EOF,
         ],

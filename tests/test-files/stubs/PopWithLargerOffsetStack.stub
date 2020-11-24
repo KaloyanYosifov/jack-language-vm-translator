@@ -1,0 +1,14 @@
+@R8
+M=D
+@{SEGMENT_ACCESS}
+D=A
+@{SEGMENT_LOCATION}
+A=D+M
+D=A
+@R9
+M=D
+@R8
+D=M
+@R9
+A=M
+M=D

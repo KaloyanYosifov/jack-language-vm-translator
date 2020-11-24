@@ -78,10 +78,21 @@ class MemoryAccessCommand implements VMCommand
             ->replace('SEGMENT_LOCATION', $convertor->convert($this->memorySegment, $this->currentFileName, $this->location));
 
         if (in_array($this->memorySegment->getKey(), $memorySegmentsWithOffsets)) {
+            $segmentAccess = 'M';
+
+            if ($this->location === 1) {
+                $segmentAccess = 'M+1';
+            } elseif ($this->location > 1) {
+                $segmentAccess = $this->location;
+            }
+
             return $stubReplacer
-                ->replace('SEGMENT_ACCESS', $this->location > 0 ? "M+$this->location" : 'M')
+                ->replace($this->location > 1 ? 'SEGMENT_OFFSET' : 'SEGMENT_ACCESS', $segmentAccess)
                 ->handle(
-                    sprintf('%sStack.stub', ucfirst($this->memoryAccessAction->getValue()))
+                    sprintf(
+                        $this->location <= 1 ? '%sStack.stub' : '%sWithLargerOffsetStack.stub',
+                        ucfirst($this->memoryAccessAction->getValue())
+                    )
                 );
         }
 
