@@ -96,8 +96,19 @@ $popActions = [
             MemorySegment::LOCAL_SEGMENT(),
             10,
             <<<EOF
+                @R8
+                M=D
+                @10
+                D=A
                 @LCL
-                A=M+10
+                A=D+M
+                D=A
+                @R9
+                M=D
+                @R8
+                D=M
+                @R9
+                A=M
                 M=D
                 EOF,
         ],
@@ -105,26 +116,37 @@ $popActions = [
             MemorySegment::ARGUMENT_SEGMENT(),
             5,
             <<<EOF
+                @R8
+                M=D
+                @5
+                D=A
                 @ARG
-                A=M+5
+                A=D+M
+                D=A
+                @R9
+                M=D
+                @R8
+                D=M
+                @R9
+                A=M
                 M=D
                 EOF,
         ],
         [
             MemorySegment::THIS_SEGMENT(),
-            7,
+            1,
             <<<EOF
                 @THIS
-                A=M+7
+                A=M+1
                 M=D
                 EOF,
         ],
         [
             MemorySegment::THAT_SEGMENT(),
-            9,
+            0,
             <<<EOF
                 @THAT
-                A=M+9
+                A=M
                 M=D
                 EOF,
         ],
