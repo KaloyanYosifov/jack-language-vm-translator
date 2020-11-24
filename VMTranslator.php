@@ -19,7 +19,7 @@ $parser = new Parser();
 $generator = new Generator();
 
 $parser->open($argv[1]);
-$generator->open(__DIR__ . DIRECTORY_SEPARATOR . pathinfo($argv[1], PATHINFO_FILENAME) . '.asm');
+$generator->open(getcwd() . DIRECTORY_SEPARATOR . pathinfo($argv[1], PATHINFO_FILENAME) . '.asm');
 
 foreach ($parser->parseLine() as $command) {
     $generator->writeCode($command);
