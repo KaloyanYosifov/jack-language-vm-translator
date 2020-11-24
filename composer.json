@@ -18,7 +18,10 @@
         "psr-4": {
             "JackVMTranslator\\": "./src",
             "Tests\\Setup\\": "./tests/Setup"
-        }
+        },
+        "files": [
+            "config.php"
+        ]
     },
     "minimum-stability": "dev",
     "prefer-stable": true
