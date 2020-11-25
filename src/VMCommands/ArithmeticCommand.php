@@ -30,6 +30,7 @@ class ArithmeticCommand implements VMCommand
 
     public function getAssemblerCode(StubReplacer $stubReplacer): string
     {
+        static $labelIndex = 0;
         $arithmeticStubMap = [
             AlgorithmicAction::ADD_ACTION()->getKey() => 'arithmetic/Add.stub',
             AlgorithmicAction::SUB_ACTION()->getKey() => 'arithmetic/Sub.stub',
@@ -42,6 +43,8 @@ class ArithmeticCommand implements VMCommand
             AlgorithmicAction::NOT_ACTION()->getKey() => 'arithmetic/Not.stub',
         ];
 
-        return $stubReplacer->handle($arithmeticStubMap[$this->action->getKey()]);
+        return $stubReplacer
+            ->replace('LABEL_INDEX', $labelIndex++)
+            ->handle($arithmeticStubMap[$this->action->getKey()]);
     }
 }
