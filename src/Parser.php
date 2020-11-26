@@ -103,12 +103,14 @@ class Parser
                 $location,
                 basename(stream_get_meta_data($this->file)['uri'])
             );
-        } elseif (count($parts) === 2 && $parts[0] === 'label') {
-            return new LabelCommand($parts[1]);
-        } elseif (count($parts) === 2 && $parts[0] === 'goto') {
-            return new GotoCommand($parts[1]);
-        } elseif (count($parts) === 2 && $parts[0] === 'if-goto') {
-            return new IfGotoCommand($parts[1]);
+        } elseif (count($parts) === 2) {
+            $commands = [
+                'goto' => GotoCommand::class,
+                'label' => LabelCommand::class,
+                'if-goto' => IfGotoCommand::class,
+            ];
+
+            return new $commands[strtolower($parts[1])];
         }
 
         if (!$algorithmicAction = AlgorithmicAction::search($parts[0])) {
