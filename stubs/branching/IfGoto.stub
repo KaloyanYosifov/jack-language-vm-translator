@@ -1,0 +1,5 @@
+@SP
+A=M-1
+D=M
+@{LABEL_NAME}
+D;JEQ
