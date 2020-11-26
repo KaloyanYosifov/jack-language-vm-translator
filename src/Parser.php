@@ -4,9 +4,11 @@ namespace JackVMTranslator;
 
 use JackVMTranslator\Enums\MemorySegment;
 use JackVMTranslator\VMCommands\VMCommand;
+use JackVMTranslator\VMCommands\GotoCommand;
 use JackVMTranslator\Enums\AlgorithmicAction;
 use JackVMTranslator\VMCommands\LabelCommand;
 use JackVMTranslator\Enums\MemoryAccessAction;
+use JackVMTranslator\VMCommands\IfGotoCommand;
 use JackVMTranslator\VMCommands\ArithmeticCommand;
 use JackVMTranslator\VMCommands\MemoryAccessCommand;
 use JackVMTranslator\Exceptions\FileExtensionIsNotVMException;
@@ -103,6 +105,10 @@ class Parser
             );
         } elseif (count($parts) === 2 && $parts[0] === 'label') {
             return new LabelCommand($parts[1]);
+        } elseif (count($parts) === 2 && $parts[0] === 'goto') {
+            return new GotoCommand($parts[1]);
+        } elseif (count($parts) === 2 && $parts[0] === 'if-goto') {
+            return new IfGotoCommand($parts[1]);
         }
 
         if (!$algorithmicAction = AlgorithmicAction::search($parts[0])) {
