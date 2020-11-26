@@ -5,6 +5,7 @@ namespace JackVMTranslator;
 use JackVMTranslator\Enums\MemorySegment;
 use JackVMTranslator\VMCommands\VMCommand;
 use JackVMTranslator\Enums\AlgorithmicAction;
+use JackVMTranslator\VMCommands\LabelCommand;
 use JackVMTranslator\Enums\MemoryAccessAction;
 use JackVMTranslator\VMCommands\ArithmeticCommand;
 use JackVMTranslator\VMCommands\MemoryAccessCommand;
@@ -100,6 +101,8 @@ class Parser
                 $location,
                 basename(stream_get_meta_data($this->file)['uri'])
             );
+        } elseif (count($parts) === 2 && $parts[0] === 'label') {
+            return new LabelCommand($parts[1]);
         }
 
         if (!$algorithmicAction = AlgorithmicAction::search($parts[0])) {
