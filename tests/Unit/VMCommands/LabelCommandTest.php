@@ -2,11 +2,9 @@
 
 namespace Tests\Unit\VMCommands;
 
-use JackVMTranslator\Enums\AlgorithmicAction;
 use JackVMTranslator\VMCommands\LabelCommand;
 use Tests\Setup\Retrievers\TestStubFileRetriever;
 use JackVMTranslator\Services\StubReplacerService;
-use JackVMTranslator\VMCommands\ArithmeticCommand;
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'arithmetic-command-datasets.php';
 
