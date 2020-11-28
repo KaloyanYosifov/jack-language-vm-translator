@@ -8,6 +8,7 @@ use JackVMTranslator\VMCommands\LabelCommand;
 use JackVMTranslator\VMCommands\IfGotoCommand;
 use JackVMTranslator\VMCommands\ArithmeticCommand;
 use JackVMTranslator\VMCommands\MemoryAccessCommand;
+use JackVMTranslator\Exceptions\InvalidArithmeticActionException;
 
 dataset('line_parser_dataset', [
     [
@@ -38,3 +39,5 @@ it('it parses the line', function (string $line, string $class) {
     expect($lineParser->parse($line))->toBeInstanceOf($class);
 })
     ->with('line_parser_dataset');
+
+it('throws an error if nothing is found', fn() => (new LineParser())->parse('test'))->throws(InvalidArithmeticActionException::class);

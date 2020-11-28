@@ -2,7 +2,7 @@
 
 namespace JackVMTranslator\Exceptions;
 
-class InvalidAlgorithmicActionException extends \Exception
+class InvalidArithmeticActionException extends \Exception
 {
     public function __construct(string $action)
     {
