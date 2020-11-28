@@ -1,38 +1,38 @@
 <?php
 
-use JackVMTranslator\Enums\AlgorithmicAction;
+use JackVMTranslator\Enums\ArithmeticAction;
 
 dataset('arithmetic_command_tests', [
     [
-        AlgorithmicAction::ADD_ACTION(),
+        ArithmeticAction::ADD_ACTION(),
         'arithmetic/Add.stub',
     ],
     [
-        AlgorithmicAction::SUB_ACTION(),
+        ArithmeticAction::SUB_ACTION(),
         'arithmetic/Sub.stub',
     ],
     [
-        AlgorithmicAction::EQ_ACTION(),
+        ArithmeticAction::EQ_ACTION(),
         'arithmetic/Eq.stub',
     ],
     [
-        AlgorithmicAction::GT_ACTION(),
+        ArithmeticAction::GT_ACTION(),
         'arithmetic/Gt.stub',
     ],
     [
-        AlgorithmicAction::LT_ACTION(),
+        ArithmeticAction::LT_ACTION(),
         'arithmetic/Lt.stub',
     ],
     [
-        AlgorithmicAction::AND_ACTION(),
+        ArithmeticAction::AND_ACTION(),
         'arithmetic/And.stub',
     ],
     [
-        AlgorithmicAction::OR_ACTION(),
+        ArithmeticAction::OR_ACTION(),
         'arithmetic/Or.stub',
     ],
     [
-        AlgorithmicAction::NOT_ACTION(),
+        ArithmeticAction::NOT_ACTION(),
         'arithmetic/Not.stub',
     ],
 ]);

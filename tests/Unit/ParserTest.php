@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use JackVMTranslator\Parser;
 use JackVMTranslator\LineParser;
 use JackVMTranslator\Enums\MemorySegment;
-use JackVMTranslator\Enums\AlgorithmicAction;
+use JackVMTranslator\Enums\ArithmeticAction;
 use JackVMTranslator\Enums\MemoryAccessAction;
 use JackVMTranslator\Exceptions\FileNotFoundException;
 use JackVMTranslator\Exceptions\FileExtensionIsNotVMException;
@@ -48,7 +48,7 @@ it('parses the lines in the vm code', function () {
             expect($command->getSegment()->getValue())->toEqual(MemorySegment::CONSTANT_SEGMENT()->getValue());
             expect($command->getLocation())->toEqual(8);
         } elseif ($i === 2) {
-            expect($command->getAction()->getValue())->toEqual(AlgorithmicAction::ADD_ACTION()->getValue());
+            expect($command->getAction()->getValue())->toEqual(ArithmeticAction::ADD_ACTION()->getValue());
         }
 
         $parseLineFunction->next();

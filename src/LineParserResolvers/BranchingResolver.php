@@ -14,6 +14,7 @@ class BranchingResolver implements LineParserResolver
         if (count($lineInParts) !== 2) {
             return null;
         }
+        [$action, $label] = $lineInParts;
 
         $commands = [
             'goto' => GotoCommand::class,
@@ -21,6 +22,6 @@ class BranchingResolver implements LineParserResolver
             'if-goto' => IfGotoCommand::class,
         ];
 
-        return new $commands[strtolower($lineInParts[1])];
+        return new $commands[strtolower($action)]($label);
     }
 }

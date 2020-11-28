@@ -3,7 +3,7 @@
 namespace JackVMTranslator\LineParserResolvers;
 
 use JackVMTranslator\VMCommands\VMCommand;
-use JackVMTranslator\Enums\AlgorithmicAction;
+use JackVMTranslator\Enums\ArithmeticAction;
 use JackVMTranslator\VMCommands\ArithmeticCommand;
 use JackVMTranslator\Exceptions\InvalidAlgorithmicActionException;
 
@@ -15,10 +15,10 @@ class ArithmeticResolver implements LineParserResolver
             return null;
         }
 
-        if (!$algorithmicAction = AlgorithmicAction::search($lineInParts[0])) {
+        if (!$algorithmicAction = ArithmeticAction::search($lineInParts[0])) {
             throw new InvalidAlgorithmicActionException($lineInParts[0]);
         }
 
-        return new ArithmeticCommand(AlgorithmicAction::{$algorithmicAction}());
+        return new ArithmeticCommand(ArithmeticAction::{$algorithmicAction}());
     }
 }

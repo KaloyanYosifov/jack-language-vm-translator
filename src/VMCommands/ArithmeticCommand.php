@@ -2,20 +2,19 @@
 
 namespace JackVMTranslator\VMCommands;
 
-use JackVMTranslator\Converter\Convertor;
 use JackVMTranslator\Replacers\StubReplacer;
-use JackVMTranslator\Enums\AlgorithmicAction;
+use JackVMTranslator\Enums\ArithmeticAction;
 
 class ArithmeticCommand implements VMCommand
 {
-    protected AlgorithmicAction $action;
+    protected ArithmeticAction $action;
 
-    public function __construct(AlgorithmicAction $action)
+    public function __construct(ArithmeticAction $action)
     {
         $this->action = $action;
     }
 
-    public function getAction(): AlgorithmicAction
+    public function getAction(): ArithmeticAction
     {
         return $this->action;
     }
@@ -32,15 +31,15 @@ class ArithmeticCommand implements VMCommand
     {
         static $labelIndex = 0;
         $arithmeticStubMap = [
-            AlgorithmicAction::ADD_ACTION()->getKey() => 'arithmetic/Add.stub',
-            AlgorithmicAction::SUB_ACTION()->getKey() => 'arithmetic/Sub.stub',
-            AlgorithmicAction::NEG_ACTION()->getKey() => 'arithmetic/Neg.stub',
-            AlgorithmicAction::EQ_ACTION()->getKey() => 'arithmetic/Eq.stub',
-            AlgorithmicAction::GT_ACTION()->getKey() => 'arithmetic/Gt.stub',
-            AlgorithmicAction::LT_ACTION()->getKey() => 'arithmetic/Lt.stub',
-            AlgorithmicAction::AND_ACTION()->getKey() => 'arithmetic/And.stub',
-            AlgorithmicAction::OR_ACTION()->getKey() => 'arithmetic/Or.stub',
-            AlgorithmicAction::NOT_ACTION()->getKey() => 'arithmetic/Not.stub',
+            ArithmeticAction::ADD_ACTION()->getKey() => 'arithmetic/Add.stub',
+            ArithmeticAction::SUB_ACTION()->getKey() => 'arithmetic/Sub.stub',
+            ArithmeticAction::NEG_ACTION()->getKey() => 'arithmetic/Neg.stub',
+            ArithmeticAction::EQ_ACTION()->getKey() => 'arithmetic/Eq.stub',
+            ArithmeticAction::GT_ACTION()->getKey() => 'arithmetic/Gt.stub',
+            ArithmeticAction::LT_ACTION()->getKey() => 'arithmetic/Lt.stub',
+            ArithmeticAction::AND_ACTION()->getKey() => 'arithmetic/And.stub',
+            ArithmeticAction::OR_ACTION()->getKey() => 'arithmetic/Or.stub',
+            ArithmeticAction::NOT_ACTION()->getKey() => 'arithmetic/Not.stub',
         ];
 
         return $stubReplacer
