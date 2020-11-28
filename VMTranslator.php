@@ -8,32 +8,37 @@ if (php_sapi_name() !== PHP_SAPI) {
     exit(1);
 }
 
-if ($argc !== 2) {
+if ($argc === 1) {
     echo 'Please specify the vm file to translate.';
     exit(1);
 }
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-$parser = new Parser();
 $generator = new Generator();
-$baseDir = pathinfo($argv[1], PATHINFO_DIRNAME);
+$files = array_slice($argv, 1);
 
-if ($baseDir[0] === DIRECTORY_SEPARATOR) {
-    $baseDir .= DIRECTORY_SEPARATOR;
-} else {
-    $baseDir = getcwd() . DIRECTORY_SEPARATOR . $baseDir . DIRECTORY_SEPARATOR;
-}
+foreach ($files as $file) {
+    $parser = new Parser();
+    $baseDir = pathinfo($file, PATHINFO_DIRNAME);
 
-echo $argv[1] . PHP_EOL;
-echo $baseDir . pathinfo($argv[1], PATHINFO_FILENAME) . '.asm' . PHP_EOL;
+    if ($baseDir[0] === DIRECTORY_SEPARATOR) {
+        $baseDir .= DIRECTORY_SEPARATOR;
+    } else {
+        $baseDir = getcwd() . DIRECTORY_SEPARATOR . $baseDir . DIRECTORY_SEPARATOR;
+    }
 
-$parser->open($argv[1]);
-$generator->open($baseDir . pathinfo($argv[1], PATHINFO_FILENAME) . '.asm');
+    echo $argv[1] . PHP_EOL;
+    echo $baseDir . pathinfo($argv[1], PATHINFO_FILENAME) . '.asm' . PHP_EOL;
 
-foreach ($parser->parseLine() as $command) {
-    $generator->writeCode($command);
+    $parser->open($argv[1]);
+    $generator->open($baseDir . pathinfo($argv[1], PATHINFO_FILENAME) . '.asm');
+
+    foreach ($parser->parseLine() as $command) {
+        $generator->writeCode($command);
+    }
+
+    $parser->close();
 }
 
 $generator->close();
-$parser->close();
