@@ -6,6 +6,7 @@ use JackVMTranslator\VMCommands\VMCommand;
 use JackVMTranslator\VMCommands\GotoCommand;
 use JackVMTranslator\VMCommands\LabelCommand;
 use JackVMTranslator\VMCommands\IfGotoCommand;
+use JackVMTranslator\Exceptions\InvalidBranchingCommandException;
 
 class BranchingResolver implements LineParserResolver
 {
@@ -14,7 +15,8 @@ class BranchingResolver implements LineParserResolver
         if (count($lineInParts) !== 2) {
             return null;
         }
-        [$action, $label] = $lineInParts;
+
+        [$command, $label] = $lineInParts;
 
         $commands = [
             'goto' => GotoCommand::class,
@@ -22,6 +24,10 @@ class BranchingResolver implements LineParserResolver
             'if-goto' => IfGotoCommand::class,
         ];
 
-        return new $commands[strtolower($action)]($label);
+        if (!array_key_exists($command, $commands)) {
+            throw new InvalidBranchingCommandException($command);
+        }
+
+        return new $commands[strtolower($command)]($label);
     }
 }
