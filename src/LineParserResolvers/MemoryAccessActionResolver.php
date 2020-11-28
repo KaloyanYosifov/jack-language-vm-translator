@@ -31,7 +31,6 @@ class MemoryAccessActionResolver implements LineParserResolver
             MemoryAccessAction::{$memoryAccessAction}(),
             MemorySegment::{$memorySegment}(),
             $location,
-            basename(stream_get_meta_data($this->file)['uri'])
         );
     }
 }

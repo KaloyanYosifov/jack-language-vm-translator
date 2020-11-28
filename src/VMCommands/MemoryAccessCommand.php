@@ -7,7 +7,7 @@ use JackVMTranslator\Replacers\StubReplacer;
 use JackVMTranslator\Enums\MemoryAccessAction;
 use JackVMTranslator\Converter\SegmentToAssemblerNameConvertor;
 
-class MemoryAccessCommand implements VMCommand
+class MemoryAccessCommand implements VMCommand, VMCommandWithFileKnowledge
 {
     protected MemoryAccessAction $memoryAccessAction;
     protected MemorySegment $memorySegment;
@@ -19,18 +19,15 @@ class MemoryAccessCommand implements VMCommand
      * @param MemoryAccessAction $memoryAccessAction
      * @param MemorySegment $memorySegment
      * @param int $location
-     * @param string $currentFileName
      */
     public function __construct(
         MemoryAccessAction $memoryAccessAction,
         MemorySegment $memorySegment,
-        int $location,
-        string $currentFileName
+        int $location
     ) {
         $this->memoryAccessAction = $memoryAccessAction;
         $this->memorySegment = $memorySegment;
         $this->location = $location;
-        $this->currentFileName = $currentFileName;
 
         if (
             MemoryAccessAction::POP_ACTION()->getKey() === $this->memoryAccessAction->getKey() &&
@@ -104,5 +101,17 @@ class MemoryAccessCommand implements VMCommand
             ->handle(
                 sprintf('%sAltStack.stub', ucfirst($this->memoryAccessAction->getValue()))
             );
+    }
+
+    public function setFile(string $filename): VMCommandWithFileKnowledge
+    {
+        $this->currentFileName = $filename;
+
+        return $this;
+    }
+
+    public function getFile(): string
+    {
+        return $this->currentFileName;
     }
 }

@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use JackVMTranslator\Parser;
+use JackVMTranslator\LineParser;
 use JackVMTranslator\Enums\MemorySegment;
 use JackVMTranslator\Enums\AlgorithmicAction;
 use JackVMTranslator\Enums\MemoryAccessAction;
@@ -13,24 +14,24 @@ use function Tests\getTestFilePath;
 
 it(
     'throws an error if file is not found',
-    fn() => (new Parser())->open('not-found.vm')
+    fn() => (new Parser(new LineParser()))->open('not-found.vm')
 )
     ->throws(FileNotFoundException::class);
 
 it(
     'throws an error if the file is not with the .vm extension',
-    fn() => (new Parser())->open('test.txt')
+    fn() => (new Parser(new LineParser()))->open('test.txt')
 )
     ->throws(FileExtensionIsNotVMException::class);
 
 it(
     'throws an error if no file has been opened yet',
-    fn() => (new Parser())->parseLine()->next()
+    fn() => (new Parser(new LineParser()))->parseLine()->next()
 )
     ->throws(\LogicException::class, 'You haven\'t opened a VM file!');
 
 it('parses the lines in the vm code', function () {
-    $parser = new Parser();
+    $parser = new Parser(new LineParser());
     $parser->open(getTestFilePath('SimpleAdd.vm'));
     $LINES_OF_CODE_IN_FILE = 3;
     $parseLineFunction = $parser->parseLine();
@@ -57,7 +58,7 @@ it('parses the lines in the vm code', function () {
 });
 
 it('skips commented lines and removes comment from code', function () {
-    $parser = new Parser();
+    $parser = new Parser(new LineParser());
     $parser->open(getTestFilePath('SimpleAddWithComments.vm'));
     $parseLine = $parser->parseLine();
     $command = $parseLine->current();

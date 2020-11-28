@@ -2,25 +2,21 @@
 
 namespace JackVMTranslator;
 
-use JackVMTranslator\Enums\MemorySegment;
 use JackVMTranslator\VMCommands\VMCommand;
-use JackVMTranslator\VMCommands\GotoCommand;
-use JackVMTranslator\Enums\AlgorithmicAction;
-use JackVMTranslator\VMCommands\LabelCommand;
-use JackVMTranslator\Enums\MemoryAccessAction;
-use JackVMTranslator\VMCommands\IfGotoCommand;
-use JackVMTranslator\VMCommands\ArithmeticCommand;
-use JackVMTranslator\VMCommands\MemoryAccessCommand;
-use JackVMTranslator\Exceptions\FileExtensionIsNotVMException;
 use JackVMTranslator\Exceptions\FileNotFoundException;
-use JackVMTranslator\Exceptions\InvalidMemorySegmentException;
-use JackVMTranslator\Exceptions\InvalidAlgorithmicActionException;
-use JackVMTranslator\Exceptions\InvalidMemoryAccessActionException;
+use JackVMTranslator\VMCommands\VMCommandWithFileKnowledge;
+use JackVMTranslator\Exceptions\FileExtensionIsNotVMException;
 
 class Parser
 {
     private const MAX_LINE_LENGTH = 4096;
     protected $file = null;
+    protected LineParser $lineParser;
+
+    public function __construct(LineParser $lineParser)
+    {
+        $this->lineParser = $lineParser;
+    }
 
     /**
      * @param string $filename
@@ -59,7 +55,13 @@ class Parser
                 continue;
             }
 
-            yield $this->parseLineToCommand($line);
+            $command = $this->lineParser->parse($line);
+
+            if ($command instanceof VMCommandWithFileKnowledge) {
+                $command->setFile(basename(stream_get_meta_data($this->file)['uri']));
+            }
+
+            yield $command;
         }
     }
 
@@ -80,43 +82,5 @@ class Parser
         }
 
         return trim($line);
-    }
-
-    protected function parseLineToCommand(string $line): VMCommand
-    {
-        $parts = explode(' ', $line);
-
-        if (count($parts) === 3) {
-            $location = $parts[2];
-
-            if (!$memoryAccessAction = MemoryAccessAction::search($parts[0])) {
-                throw new InvalidMemoryAccessActionException($parts[0]);
-            }
-
-            if (!$memorySegment = MemorySegment::search($parts[1])) {
-                throw new InvalidMemorySegmentException($parts[1]);
-            }
-
-            return new MemoryAccessCommand(
-                MemoryAccessAction::{$memoryAccessAction}(),
-                MemorySegment::{$memorySegment}(),
-                $location,
-                basename(stream_get_meta_data($this->file)['uri'])
-            );
-        } elseif (count($parts) === 2) {
-            $commands = [
-                'goto' => GotoCommand::class,
-                'label' => LabelCommand::class,
-                'if-goto' => IfGotoCommand::class,
-            ];
-
-            return new $commands[strtolower($parts[1])];
-        }
-
-        if (!$algorithmicAction = AlgorithmicAction::search($parts[0])) {
-            throw new InvalidAlgorithmicActionException($parts[0]);
-        }
-
-        return new ArithmeticCommand(AlgorithmicAction::{$algorithmicAction}());
     }
 }
