@@ -3,6 +3,8 @@
 namespace JackVMTranslator;
 
 use JackVMTranslator\VMCommands\VMCommand;
+use JackVMTranslator\VMCommands\FunctionCommand;
+use JackVMTranslator\LineParserResolvers\FunctionResolver;
 use JackVMTranslator\LineParserResolvers\BranchingResolver;
 use JackVMTranslator\Exceptions\CouldNotParseLineException;
 use JackVMTranslator\LineParserResolvers\ArithmeticResolver;
@@ -19,6 +21,7 @@ class LineParser
             new ArithmeticResolver(),
             new BranchingResolver(),
             new MemoryAccessActionResolver(),
+            new FunctionResolver(),
         ];
     }
 
