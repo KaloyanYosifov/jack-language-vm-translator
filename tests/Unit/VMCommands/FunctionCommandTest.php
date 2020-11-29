@@ -7,6 +7,11 @@ use JackVMTranslator\VMCommands\FunctionCommand;
 use Tests\Setup\Retrievers\TestStubFileRetriever;
 use JackVMTranslator\Services\StubReplacerService;
 
+it('can reveal its vm code', function () {
+    $command = new FunctionCommand('Test', 2);
+    expect($command->getVMCode())->toEqual('function Test 2');
+});
+
 it('creates a label when it comes across a function', function () {
     $functionCommand = new FunctionCommand('TESTING', 0);
 
