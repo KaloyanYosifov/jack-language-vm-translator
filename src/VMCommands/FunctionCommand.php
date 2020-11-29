@@ -9,12 +9,12 @@ use JackVMTranslator\Replacers\StubReplacer;
 class FunctionCommand implements VMCommand
 {
     protected string $functionName;
-    protected int $numberOfArguments;
+    protected int $numberOfLocalVariables;
 
-    public function __construct(string $functionName, int $numberOfArguments)
+    public function __construct(string $functionName, int $numberOfLocalVariables)
     {
         $this->functionName = $functionName;
-        $this->numberOfArguments = $numberOfArguments;
+        $this->numberOfLocalVariables = $numberOfLocalVariables;
     }
 
     public function getVMCode(): string
@@ -22,7 +22,7 @@ class FunctionCommand implements VMCommand
         return sprintf(
             'function %s %d',
             $this->functionName,
-            $this->numberOfArguments
+            $this->numberOfLocalVariables
         );
     }
 
@@ -32,8 +32,8 @@ class FunctionCommand implements VMCommand
         ?>
         (<?php echo $this->functionName; ?>)
         <?php
-        if ($this->numberOfArguments > 0) {
-            for ($i = 0; $i < $this->numberOfArguments; $i++) {
+        if ($this->numberOfLocalVariables > 0) {
+            for ($i = 0; $i < $this->numberOfLocalVariables; $i++) {
                 echo 'push constant 0' . PHP_EOL;
                 echo 'pop local ' . $i . PHP_EOL;
             }
