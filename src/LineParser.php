@@ -9,6 +9,7 @@ use JackVMTranslator\LineParserResolvers\BranchingResolver;
 use JackVMTranslator\Exceptions\CouldNotParseLineException;
 use JackVMTranslator\LineParserResolvers\ArithmeticResolver;
 use JackVMTranslator\LineParserResolvers\LineParserResolver;
+use JackVMTranslator\LineParserResolvers\CallFunctionResolver;
 use JackVMTranslator\LineParserResolvers\MemoryAccessActionResolver;
 
 class LineParser
@@ -22,6 +23,7 @@ class LineParser
             new BranchingResolver(),
             new MemoryAccessActionResolver(),
             new FunctionResolver(),
+            new CallFunctionResolver(),
         ];
     }
 
