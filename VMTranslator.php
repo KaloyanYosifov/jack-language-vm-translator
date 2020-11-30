@@ -2,6 +2,7 @@
 
 use JackVMTranslator\Parser;
 use JackVMTranslator\Generator;
+use JackVMTranslator\LineParser;
 
 if (php_sapi_name() !== PHP_SAPI) {
     echo 'Please run this in the command line!';
@@ -19,7 +20,7 @@ $generator = new Generator();
 $files = array_slice($argv, 1);
 
 foreach ($files as $file) {
-    $parser = new Parser();
+    $parser = new Parser(new LineParser());
     $baseDir = pathinfo($file, PATHINFO_DIRNAME);
 
     if ($baseDir[0] === DIRECTORY_SEPARATOR) {
