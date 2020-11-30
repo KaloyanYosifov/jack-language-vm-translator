@@ -3,6 +3,7 @@
 namespace JackVMTranslator;
 
 use JackVMTranslator\VMCommands\VMCommand;
+use JackVMTranslator\VMCommands\ReturnCommand;
 use JackVMTranslator\VMCommands\FunctionCommand;
 use JackVMTranslator\LineParserResolvers\FunctionResolver;
 use JackVMTranslator\LineParserResolvers\BranchingResolver;

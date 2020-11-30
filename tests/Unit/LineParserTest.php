@@ -56,7 +56,7 @@ it(
 it(
     'throws an error if nothing is found with three arguments in a line',
     fn() => (new LineParser())->parse('test test 3'))
-    ->throws(InvalidMemoryAccessActionException::class);
+    ->throws(CouldNotParseLineException::class);
 
 it(
     'throws an error if nothing is found with four arguments in a line',
