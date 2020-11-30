@@ -8,7 +8,7 @@ M=D
 
 // return address
 @5
-D=M
+D=A
 
 @R7
 A=M-D
@@ -34,7 +34,7 @@ M=D+1
 
 // reposition THAT
 @4
-D=M
+D=A
 
 @R7
 A=M-D
@@ -45,7 +45,7 @@ M=D
 
 // reposition THIS
 @3
-D=M
+D=A
 
 @R7
 A=M-D
@@ -56,18 +56,7 @@ M=D
 
 // reposition ARG
 @2
-D=M
-
-@R7
-A=M-D
-D=M
-
-@ARG
-M=D
-
-// reposition ARG
-@2
-D=M
+D=A
 
 @R7
 A=M-D
