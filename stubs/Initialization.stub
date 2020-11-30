@@ -1,0 +1,18 @@
+// initialization
+@256
+D=A
+
+@0
+M=D
+
+@450
+D=A
+
+@1
+M=D
+
+@3550
+D=A
+
+@2
+M=D
