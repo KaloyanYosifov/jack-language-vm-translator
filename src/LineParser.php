@@ -5,6 +5,7 @@ namespace JackVMTranslator;
 use JackVMTranslator\VMCommands\VMCommand;
 use JackVMTranslator\VMCommands\ReturnCommand;
 use JackVMTranslator\VMCommands\FunctionCommand;
+use JackVMTranslator\LineParserResolvers\ReturnResolver;
 use JackVMTranslator\LineParserResolvers\FunctionResolver;
 use JackVMTranslator\LineParserResolvers\BranchingResolver;
 use JackVMTranslator\Exceptions\CouldNotParseLineException;
@@ -20,6 +21,7 @@ class LineParser
     public function __construct()
     {
         $this->resolvers = [
+            new ReturnResolver(),
             new ArithmeticResolver(),
             new BranchingResolver(),
             new MemoryAccessActionResolver(),
