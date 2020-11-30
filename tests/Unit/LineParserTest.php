@@ -11,7 +11,6 @@ use JackVMTranslator\VMCommands\MemoryAccessCommand;
 use JackVMTranslator\Exceptions\CouldNotParseLineException;
 use JackVMTranslator\Exceptions\InvalidArithmeticActionException;
 use JackVMTranslator\Exceptions\InvalidBranchingCommandException;
-use JackVMTranslator\Exceptions\InvalidMemoryAccessActionException;
 
 dataset('line_parser_dataset', [
     [

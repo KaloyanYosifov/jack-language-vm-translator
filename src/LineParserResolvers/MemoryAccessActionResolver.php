@@ -7,7 +7,6 @@ use JackVMTranslator\VMCommands\VMCommand;
 use JackVMTranslator\Enums\MemoryAccessAction;
 use JackVMTranslator\VMCommands\MemoryAccessCommand;
 use JackVMTranslator\Exceptions\InvalidMemorySegmentException;
-use JackVMTranslator\Exceptions\InvalidMemoryAccessActionException;
 
 class MemoryAccessActionResolver implements LineParserResolver
 {
