@@ -1,0 +1,88 @@
+// return statement
+@LCL
+D=M
+
+// endframe
+@R7
+M=D
+
+// return address
+@5
+D=M
+
+@R7
+A=M-D
+D=M
+
+@R8
+M=D
+
+// add return value to argument
+@SP
+A=M-1
+D=M
+
+@ARG
+A=M
+M=D
+// set the memory location of the arg to the D register
+D=A
+
+// reposition SP
+@SP
+M=D+1
+
+// reposition THAT
+@4
+D=M
+
+@R7
+A=M-D
+D=M
+
+@THAT
+M=D
+
+// reposition THIS
+@3
+D=M
+
+@R7
+A=M-D
+D=M
+
+@THIS
+M=D
+
+// reposition ARG
+@2
+D=M
+
+@R7
+A=M-D
+D=M
+
+@ARG
+M=D
+
+// reposition ARG
+@2
+D=M
+
+@R7
+A=M-D
+D=M
+
+@ARG
+M=D
+
+// reposition LCL
+@R7
+A=M-1
+D=M
+
+@LCl
+M=D
+
+@R8
+0;JMP
