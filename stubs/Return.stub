@@ -74,4 +74,5 @@ D=M
 M=D
 
 @R8
-0;JMP
+M;JGT
+M;JLT

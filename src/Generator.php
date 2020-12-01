@@ -3,6 +3,9 @@
 namespace JackVMTranslator;
 
 use JackVMTranslator\VMCommands\VMCommand;
+use JackVMTranslator\VMCommands\GotoCommand;
+use JackVMTranslator\VMCommands\LabelCommand;
+use JackVMTranslator\VMCommands\FunctionCommand;
 use JackVMTranslator\Services\StubReplacerService;
 use JackVMTranslator\Retrievers\StubFileRetriever;
 use JackVMTranslator\Exceptions\FileNotFoundException;
@@ -42,6 +45,8 @@ class Generator
         if (!$this->file) {
             return;
         }
+
+        $content = file_get_contents(stream_get_meta_data($this->file)['uri']);
 
         fclose($this->file);
     }
