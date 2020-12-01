@@ -2,9 +2,12 @@
 
 namespace JackVMTranslator\VMCommands;
 
+use JackVMTranslator\LineParser;
 use JackVMTranslator\Support\Helpers;
 use JackVMTranslator\Enums\ArithmeticAction;
 use JackVMTranslator\Replacers\StubReplacer;
+use JackVMTranslator\Services\StubReplacerService;
+use JackVMTranslator\Retrievers\StubFileRetriever;
 
 class FunctionCommand implements VMCommand
 {
@@ -33,9 +36,11 @@ class FunctionCommand implements VMCommand
         (<?php echo $this->functionName; ?>)
         <?php
         if ($this->numberOfLocalVariables > 0) {
+            $lineParser = new LineParser();
+
             for ($i = 0; $i < $this->numberOfLocalVariables; $i++) {
-                echo 'push constant 0' . PHP_EOL;
-                echo 'pop local ' . $i . PHP_EOL;
+                echo $lineParser->parse('push constant 0')->getAssemblerCode(new StubReplacerService(new StubFileRetriever()));
+                echo $lineParser->parse('pop local ' . $i)->getAssemblerCode(new StubReplacerService(new StubFileRetriever()));
             }
         }
         ?>

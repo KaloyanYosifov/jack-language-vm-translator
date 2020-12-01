@@ -3,6 +3,7 @@
 use JackVMTranslator\Parser;
 use JackVMTranslator\Generator;
 use JackVMTranslator\LineParser;
+use JackVMTranslator\VMCommands\CallFunctionCommand;
 use JackVMTranslator\VMCommands\InitializationCommand;
 
 if (php_sapi_name() !== PHP_SAPI) {
@@ -35,6 +36,7 @@ $files = array_slice($argv, 1);
 $generator->open(getBaseDirFromFile($argv[1]) . pathinfo($argv[1], PATHINFO_FILENAME) . '.asm');
 
 $generator->writeCode(new InitializationCommand());
+$generator->writeCode(new CallFunctionCommand('Sys.init', 0));
 
 foreach ($files as $file) {
     $parser = new Parser(new LineParser());
