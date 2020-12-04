@@ -35,8 +35,6 @@ $generator = new Generator();
 $files = array_slice($argv, 1);
 $generator->open(getBaseDirFromFile($argv[1]) . pathinfo($argv[1], PATHINFO_FILENAME) . '.asm');
 
-$generator->writeCode(new InitializationCommand());
-
 foreach ($files as $file) {
     $parser = new Parser(new LineParser());
     $baseDir = getBaseDirFromFile($file);
