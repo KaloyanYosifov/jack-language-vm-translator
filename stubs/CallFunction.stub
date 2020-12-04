@@ -6,43 +6,44 @@ D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 
 // set the current LCL
 @LCL
 D=M
 @SP
-M=M+1
 A=M
 M=D
+@SP
+M=M+1
 
 // set the current ARG
 @ARG
 D=M
 @SP
-M=M+1
 A=M
 M=D
+@SP
+M=M+1
 
 // set the current THIS
 @THIS
 D=M
 @SP
-M=M+1
 A=M
 M=D
+@SP
+M=M+1
 
 // set the current THAT
 @THAT
 D=M
 @SP
-M=M+1
 A=M
 M=D
-
-// move pointer
 @SP
 M=M+1
-D=M
 
 // subtract the current pointer by 5
 @5

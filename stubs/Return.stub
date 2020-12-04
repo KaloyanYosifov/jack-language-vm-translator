@@ -3,23 +3,24 @@
 D=M
 
 // endframe
-@R7
+@ENDFRAME
 M=D
 
 // return address
 @5
 D=A
 
-@R7
+@ENDFRAME
 A=M-D
 D=M
 
-@R8
+@RETURN_ADDRESS
 M=D
 
 // add return value to argument
 @SP
-A=M-1
+M=M-1
+A=M
 D=M
 
 @ARG
@@ -33,46 +34,41 @@ D=A
 M=D+1
 
 // reposition THAT
-@4
-D=A
-
-@R7
-A=M-D
+@ENDFRAME
+M=M-1
+A=M
 D=M
 
 @THAT
 M=D
 
 // reposition THIS
-@3
-D=A
-
-@R7
-A=M-D
+@ENDFRAME
+M=M-1
+A=M
 D=M
 
 @THIS
 M=D
 
 // reposition ARG
-@2
-D=A
-
-@R7
-A=M-D
+@ENDFRAME
+M=M-1
+A=M
 D=M
 
 @ARG
 M=D
 
 // reposition LCL
-@R7
-A=M-1
+@ENDFRAME
+M=M-1
+A=M
 D=M
 
-@LCl
+@LCL
 M=D
 
-@R8
-M;JGT
-M;JLT
+@RETURN_ADDRESS
+A=M
+0;JMP
