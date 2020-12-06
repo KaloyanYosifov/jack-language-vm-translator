@@ -23,7 +23,7 @@ $firstFileOrDirectory = Helpers::getBaseDirFromFile($argv[1]) . $argv[1];
 $generatedFileName = Helpers::getBaseDirFromFile($argv[1]) . pathinfo($argv[1], PATHINFO_FILENAME) . '.asm';
 
 if (is_dir($firstFileOrDirectory)) {
-    $files = Helpers::getFilesFromDirectory($firstFileOrDirectory, 'asm');
+    $files = Helpers::getFilesFromDirectory($firstFileOrDirectory, 'vm');
     // remove the single dot in the end if the user chooses the directory to translate with the `.`
     $firstFileOrDirectory = preg_replace('~\.$~', '', $firstFileOrDirectory);
     $generatedFileName = pathinfo($firstFileOrDirectory, PATHINFO_FILENAME) . '.asm';
@@ -32,7 +32,7 @@ if (is_dir($firstFileOrDirectory)) {
 }
 
 if (!$files) {
-    throw new \InvalidArgumentException('There are no assembly files in this directory!');
+    throw new \InvalidArgumentException('There are no vm files in this directory!');
 }
 
 if (file_exists($generatedFileName)) {
