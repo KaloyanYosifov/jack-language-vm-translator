@@ -3,6 +3,7 @@
 use JackVMTranslator\Parser;
 use JackVMTranslator\Generator;
 use JackVMTranslator\LineParser;
+use JackVMTranslator\Support\Helpers;
 use JackVMTranslator\VMCommands\CallFunctionCommand;
 use JackVMTranslator\VMCommands\InitializationCommand;
 
@@ -18,26 +19,32 @@ if ($argc === 1) {
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-function getBaseDirFromFile(string $file)
-{
-    $baseDir = pathinfo($file, PATHINFO_DIRNAME);
+$firstFileOrDirectory = Helpers::getBaseDirFromFile($argv[1]) . $argv[1];
+$generatedFileName = Helpers::getBaseDirFromFile($argv[1]) . pathinfo($argv[1], PATHINFO_FILENAME) . '.asm';
 
-    if ($baseDir[0] === DIRECTORY_SEPARATOR) {
-        $baseDir .= DIRECTORY_SEPARATOR;
-    } else {
-        $baseDir = getcwd() . DIRECTORY_SEPARATOR . $baseDir . DIRECTORY_SEPARATOR;
-    }
+if (is_dir($firstFileOrDirectory)) {
+    $files = Helpers::getFilesFromDirectory($firstFileOrDirectory, 'asm');
+    // remove the single dot in the end if the user chooses the directory to translate with the `.`
+    $firstFileOrDirectory = preg_replace('~\.$~', '', $firstFileOrDirectory);
+    $generatedFileName = pathinfo($firstFileOrDirectory, PATHINFO_FILENAME) . '.asm';
+} else {
+    $files = array_slice($argv, 1);
+}
 
-    return $baseDir;
+if (!$files) {
+    throw new \InvalidArgumentException('There are no assembly files in this directory!');
+}
+
+if (file_exists($generatedFileName)) {
+    unlink($generatedFileName);
 }
 
 $generator = new Generator();
-$files = array_slice($argv, 1);
-$generator->open(getBaseDirFromFile($argv[1]) . pathinfo($argv[1], PATHINFO_FILENAME) . '.asm');
+$generator->open($generatedFileName);
 
 foreach ($files as $file) {
     $parser = new Parser(new LineParser());
-    $baseDir = getBaseDirFromFile($file);
+    $baseDir = Helpers::getBaseDirFromFile($file);
 
     echo $file . PHP_EOL;
     echo $baseDir . pathinfo($file, PATHINFO_FILENAME) . '.asm' . PHP_EOL;
