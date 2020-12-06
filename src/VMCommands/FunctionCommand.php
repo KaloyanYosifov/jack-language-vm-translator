@@ -37,6 +37,10 @@ class FunctionCommand implements VMCommand
         <?php
         if ($this->numberOfLocalVariables > 0) {
             $lineParser = new LineParser();
+            echo PHP_EOL . '@' . $this->numberOfLocalVariables . PHP_EOL;
+            echo 'D=A' . PHP_EOL;
+            echo '@SP' . PHP_EOL;
+            echo 'M=M+D' . PHP_EOL;
 
             for ($i = 0; $i < $this->numberOfLocalVariables; $i++) {
                 echo $lineParser->parse('push constant 0')->getAssemblerCode(new StubReplacerService(new StubFileRetriever()));
