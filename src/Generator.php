@@ -50,6 +50,12 @@ class Generator
 
         fclose($this->file);
 
+
+        // below we are calling the initialization code
+        // which is prepended to the file
+
+        // if we have a sys init function
+        // add initialization code to call it
         if (preg_match('~(Sys.init)~', $content)) {
             $content = $this->getAssemblyCodeFromCommand(new CallFunctionCommand('Sys.init', 0)) . $content;
         }
