@@ -19,14 +19,15 @@ if ($argc === 1) {
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-$firstFileOrDirectory = Helpers::getBaseDirFromFile($argv[1]) . $argv[1];
-$generatedFileName = Helpers::getBaseDirFromFile($argv[1]) . pathinfo($argv[1], PATHINFO_FILENAME) . '.asm';
+$baseDir = Helpers::getBaseDirFromFile($argv[1]);
+$firstFileOrDirectory = $baseDir . $argv[1];
+$generatedFileName = $baseDir . pathinfo($argv[1], PATHINFO_FILENAME) . '.asm';
 
 if (is_dir($firstFileOrDirectory)) {
     $files = Helpers::getFilesFromDirectory($firstFileOrDirectory, 'vm');
     // remove the single dot in the end if the user chooses the directory to translate with the `.`
     $firstFileOrDirectory = preg_replace('~\.$~', '', $firstFileOrDirectory);
-    $generatedFileName = pathinfo($firstFileOrDirectory, PATHINFO_FILENAME) . '.asm';
+    $generatedFileName = $firstFileOrDirectory . DIRECTORY_SEPARATOR . pathinfo($firstFileOrDirectory, PATHINFO_FILENAME) . '.asm';
 } else {
     $files = array_slice($argv, 1);
 }

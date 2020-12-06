@@ -25,13 +25,16 @@ class Helpers
         $baseDir = pathinfo($file, PATHINFO_DIRNAME);
 
         if ($baseDir[0] === DIRECTORY_SEPARATOR) {
-            $baseDir .= DIRECTORY_SEPARATOR;
-        } else {
-            $baseDir = $baseDir === '.' ? '' : $baseDir;
-            $baseDir = getcwd() . DIRECTORY_SEPARATOR . $baseDir . DIRECTORY_SEPARATOR;
+            return $baseDir . DIRECTORY_SEPARATOR;
         }
 
-        return $baseDir;
+        $baseDir = $baseDir === '.' ? '' : $baseDir;
+
+        if (!$baseDir) {
+            return getcwd() . DIRECTORY_SEPARATOR;
+        }
+
+        return getcwd() . DIRECTORY_SEPARATOR . $baseDir . DIRECTORY_SEPARATOR;
     }
 
     public static function getFilesFromDirectory(string $directory, string $extension = '*'): array
@@ -48,8 +51,14 @@ class Helpers
 
         // if the directory ends with .
         // this will remove it
-        $directory = static::getBaseDirFromFile($directory);
+        $directory = preg_replace('~\.$~', '', $directory);
         $filesMatchingExtension = [];
+
+        // if the directory doesnt have an ending separator
+        // add one
+        if (!preg_match('~\\' . DIRECTORY_SEPARATOR . '$~', $directory)) {
+            $directory .= DIRECTORY_SEPARATOR;
+        }
 
         foreach ($files as $file) {
             if (preg_match('~^\.|\.\.$~', $file) || is_dir($directory . $file)) {
