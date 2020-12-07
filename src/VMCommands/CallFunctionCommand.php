@@ -2,17 +2,17 @@
 
 namespace JackVMTranslator\VMCommands;
 
-use JackVMTranslator\Support\Helpers;
-use JackVMTranslator\Enums\ArithmeticAction;
 use JackVMTranslator\Replacers\StubReplacer;
 
-class CallFunctionCommand implements VMCommand
+class CallFunctionCommand implements VMCommand, VMCommandWithFileKnowledge
 {
+    protected string $fileName;
     protected string $functionName;
     protected int $numberOfArguments;
 
     public function __construct(string $functionName, int $numberOfArguments)
     {
+        $this->fileName = '';
         $this->functionName = $functionName;
         $this->numberOfArguments = $numberOfArguments;
     }
@@ -37,9 +37,21 @@ class CallFunctionCommand implements VMCommand
         }
 
         return $stubReplacer
-            ->replace('CALLER_RETURN_ADDRESS_INDEX', $calledFunctionsIndex++)
+            ->replace('CALLER_RETURN_ADDRESS', $this->fileName . '$ret' . $calledFunctionsIndex++)
             ->replace('CALLED_FUNCTION_NAME', $this->functionName)
             ->replace('ARGUMENTS_SUBTRACTION', $assemblyForArgumentsSubtractingTheCurrentSpPointer)
             ->handle('CallFunction.stub');
+    }
+
+    public function setFile(string $filename): VMCommandWithFileKnowledge
+    {
+        $this->fileName = $filename;
+
+        return $this;
+    }
+
+    public function getFile(): string
+    {
+        return $this->fileName;
     }
 }
