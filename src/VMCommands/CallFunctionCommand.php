@@ -33,7 +33,7 @@ class CallFunctionCommand implements VMCommand
 
         if ($this->numberOfArguments > 0) {
             $assemblyForArgumentsSubtractingTheCurrentSpPointer = '@' . $this->numberOfArguments . PHP_EOL;
-            $assemblyForArgumentsSubtractingTheCurrentSpPointer .= 'D=D-A';
+            $assemblyForArgumentsSubtractingTheCurrentSpPointer .= 'D=D+A';
         }
 
         return $stubReplacer
